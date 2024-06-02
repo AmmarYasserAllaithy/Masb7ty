@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Masb7ty</string>
+    <string name="tasabee7">Tasabee7</string>
+    <string name="about">About</string>
+    <string name="total">Total</string>
+    <string name="count">Count</string>
+    <string name="target">Target</string>
+    <string name="clear_all_counters">Clear all counters</string>
+    <string name="unify_all_targets">Unify all targets</string>
+    <string name="unify_all_targets_note">The targets of all tasabee7 will be updated to the value you provided!</string>
+    <string name="unified_target">Unified target</string>
+    <string name="add_tasbee7">Add tasbee7</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="tasbee7_text">Text</string>
+    <string name="click_to_count">Click to count</string>
+    <string name="delete">Delete</string>
+    <string name="delete_title">Delete tasbee7</string>
+    <string name="delete_message">Confirm deleting \"%1$s\"?</string>
+    <string name="keep">Keep</string>
+    <string name="stats_phrase">You\'ve counted %1$d of %2$d</string>
+    <string name="description">Digital tasbee7 counter</string>
+    <string name="edit_tasbee7">Edit</string>
+
+</resources>

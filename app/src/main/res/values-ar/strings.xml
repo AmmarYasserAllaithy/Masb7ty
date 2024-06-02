@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Masb7ty</string>
+    <string name="tasabee7">التسابيح</string>
+    <string name="about">عن التطبيق</string>
+    <string name="total">اجمالي</string>
+    <string name="count">العدد</string>
+    <string name="target">المستهدف</string>
+    <string name="clear_all_counters">تصفير جميع العدادات</string>
+    <string name="unify_all_targets">توحيد المستهدف للكل</string>
+    <string name="unify_all_targets_note">سيتم تغيير المستهدف في جميع التسابيح للقيمة التي ادخلتها</string>
+    <string name="unified_target">القيمة الموحدة</string>
+    <string name="add_tasbee7">إضافة تسبيح</string>
+    <string name="save">حفظ</string>
+    <string name="cancel">إلغاء</string>
+    <string name="tasbee7_text">النص</string>
+    <string name="click_to_count">اضغط هنا للتسبيح</string>
+    <string name="delete">حذف</string>
+    <string name="delete_title">حذف تسبيح</string>
+    <string name="delete_message">هل تريد تأكيد حذف  \"%1$s\"?</string>
+    <string name="keep">تراجع</string>
+    <string name="stats_phrase">لقد سبحت %1$d من %2$d تسبيحة</string>
+    <string name="description">مسبحة رقمية</string>
+    <string name="edit_tasbee7">تعديل</string>
+
+</resources>

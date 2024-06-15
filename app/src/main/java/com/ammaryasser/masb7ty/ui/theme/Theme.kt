@@ -31,7 +31,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = Palette.Green.color,
     tertiary = Palette.Purple.color,
     background = Color(255, 245, 250),
-    surface = Color(240, 230, 235),
+    surface = Color(0xFFEFEBEE),
 
     onPrimary = Color.White,
     onSecondary = Color.White,

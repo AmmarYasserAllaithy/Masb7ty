@@ -16,14 +16,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Outlined
-import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.ArrowForward
-import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
@@ -51,7 +51,7 @@ import com.ammaryasser.masb7ty.viewmodel.Masba7tyScreenViewModel
 
 
 private lateinit var vm: Masba7tyScreenViewModel
-var tasbee7Id: MutableState<Int> = mutableStateOf(0)
+var tasbee7Id: MutableState<Int> = mutableIntStateOf(0)
 
 
 @Composable
@@ -64,13 +64,13 @@ fun Masba7tyScreen(
     LockScreenOrientation(1)
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-//            .background(colorScheme.background),
-        verticalArrangement = Arrangement.spacedBy(1.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorScheme.background),
     ) {
         TopBar {
             IconButton(onClick = { onNavToTasabee7Screen(false) }) {
-                Icon(Outlined.List, "", tint = colorScheme.onPrimary)
+                Icon(Outlined.Menu, "", tint = colorScheme.onPrimary)
             }
         }
 
@@ -189,7 +189,7 @@ fun Tasbee7Text(text: String) {
         Modifier
             .fillMaxWidth()
             .heightIn(0.dp, 400.dp)
-            .padding(top = 8.dp, bottom = 2.dp, start = 8.dp, end = 8.dp)
+            .padding(top = 8.dp, bottom = 0.dp, start = 8.dp, end = 8.dp)
             .clip(rocoshape)
             .background(colorScheme.surface)
             .verticalScroll(rememberScrollState())
@@ -215,7 +215,7 @@ fun CounterBoard(
     Box(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp)
+            .padding(vertical = 2.dp, horizontal = 8.dp)
             .clip(rocoshape)
             .background(colorScheme.surface)
             .padding(vertical = 5.dp, horizontal = 12.dp)
@@ -256,25 +256,25 @@ fun NavCtrl(
 ) {
     Row(
         modifier = Modifier
-            .padding(top = 1.dp)
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
             .clip(rocoshape),
-        horizontalArrangement = Arrangement.spacedBy(1.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
         val modifier = Modifier
-            .weight(1f)
+            .clip(rocoshape)
             .background(colorScheme.surface)
+            .padding(horizontal = 8.dp)
         val tint = colorScheme.onSurface.copy(.5f)
 
         IconButton(onClick = onPrev, modifier = modifier) {
-            Icon(Outlined.ArrowBack, "", tint = tint)
+            Icon(Icons.AutoMirrored.Outlined.KeyboardArrowLeft, "", tint = tint)
         }
 
         IconButton(onClick = onNext, modifier = modifier) {
-            Icon(Outlined.ArrowForward, "", tint = tint)
+            Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight, "", tint = tint)
         }
 
     }

@@ -36,8 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -49,7 +47,6 @@ import com.ammaryasser.masb7ty.component.RoundedTextField
 import com.ammaryasser.masb7ty.component.Tasbee7SwipeCard
 import com.ammaryasser.masb7ty.component.TopBar
 import com.ammaryasser.masb7ty.data.Tasbee7
-import com.ammaryasser.masb7ty.util.rocoshape
 import com.ammaryasser.masb7ty.viewmodel.Tasabee7ScreenViewModel
 
 
@@ -64,7 +61,11 @@ fun Tasabee7Screen(
 ) {
     vm = viewModel(factory = Tasabee7ScreenViewModel.Factory)
 
-    Column(Modifier.fillMaxSize()) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(colorScheme.background)
+    ) {
         val tasabee7 = vm.tasabee7.observeAsState()
 
         var total by remember { mutableIntStateOf(0) }
@@ -86,7 +87,7 @@ fun Tasabee7Screen(
             Tasabee7Grid(this, Modifier.weight(1f), onNavBack) {
                 Text(
                     text = stringResource(R.string.stats_phrase, totalCount, totalTarget),
-                    color = colorScheme.secondary.copy(.75f),
+                    color = colorScheme.onBackground.copy(.75f),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()

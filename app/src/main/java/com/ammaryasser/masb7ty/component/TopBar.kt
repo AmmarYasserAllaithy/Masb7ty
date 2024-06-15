@@ -2,8 +2,8 @@ package com.ammaryasser.masb7ty.component
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons.Outlined
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,7 +23,7 @@ import com.ammaryasser.masb7ty.R
 @Composable
 fun TopBar(
     title: String = stringResource(R.string.app_name),
-    backable: Boolean = false,
+    navBack: Boolean = false,
     onBack: () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
 ) {
@@ -37,9 +37,13 @@ fun TopBar(
             titleContentColor = colorScheme.onPrimary
         ),
         navigationIcon = {
-            if (backable)
+            if (navBack)
                 IconButton(onClick = onBack) {
-                    Icon(Outlined.ArrowBack, "", tint = colorScheme.onPrimary)
+                    Icon(
+                        Icons.AutoMirrored.Outlined.KeyboardArrowLeft,
+                        "",
+                        tint = colorScheme.onPrimary.copy(.7f)
+                    )
                 }
         },
     )

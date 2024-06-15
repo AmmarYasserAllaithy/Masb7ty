@@ -19,7 +19,7 @@
     <string name="delete_message">Confirm deleting \"%1$s\"?</string>
     <string name="keep">Keep</string>
     <string name="stats_phrase">You\'ve counted %1$d of %2$d</string>
-    <string name="description">Digital tasbee7 counter</string>
+    <string name="description">Jetpack compose Android app act like digital counter for Muslim\'s azkar and tasbee7.</string>
     <string name="edit_tasbee7">Edit</string>
 
 </resources>

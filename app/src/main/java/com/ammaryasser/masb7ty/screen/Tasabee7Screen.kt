@@ -1,11 +1,12 @@
 package com.ammaryasser.masb7ty.screen
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,7 +35,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -99,6 +99,7 @@ fun Tasabee7Screen(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun Tasabee7TopBar(
     total: Int,
@@ -191,19 +192,13 @@ fun Tasabee7TopBar(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(Outlined.Info, "")
-                        Text(stringResource(R.string.unify_all_targets_note))
-                    }
-
                     RoundedTextField(
                         stringResource(R.string.unified_target),
                         unifiedTarget,
-                        true
+                        true,
+                        supportingText = {
+                            Text(stringResource(R.string.unify_all_targets_note))
+                        }
                     ) { unifiedTarget = it }
                 }
             }
@@ -212,6 +207,7 @@ fun Tasabee7TopBar(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun AddNewTasbee7Dialog(
     tasbee7: Tasbee7? = null,

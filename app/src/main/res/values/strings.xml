@@ -7,7 +7,7 @@
     <string name="target">Target</string>
     <string name="clear_all_counters">Clear all counters</string>
     <string name="unify_all_targets">Unify all targets</string>
-    <string name="unify_all_targets_note">The targets of all tasabee7 will be updated to the value you provided!</string>
+    <string name="unify_all_targets_note">This number will be applied as a target for all tasabee7!</string>
     <string name="unified_target">Unified target</string>
     <string name="add_tasbee7">Add tasbee7</string>
     <string name="save">Save</string>

@@ -8,7 +8,7 @@
     <string name="target">المستهدف</string>
     <string name="clear_all_counters">تصفير جميع العدادات</string>
     <string name="unify_all_targets">توحيد المستهدف للكل</string>
-    <string name="unify_all_targets_note">سيتم تغيير المستهدف في جميع التسابيح للقيمة التي ادخلتها</string>
+    <string name="unify_all_targets_note">سيطبق هذا الرقم كمستهدف لجميع التسابيح</string>
     <string name="unified_target">القيمة الموحدة</string>
     <string name="add_tasbee7">إضافة تسبيح</string>
     <string name="save">حفظ</string>

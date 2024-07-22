@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue.EndToStart
@@ -29,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDirection.Companion.Content
 import androidx.compose.ui.unit.dp
 import com.ammaryasser.masb7ty.util.rocoshape
 
@@ -52,13 +56,8 @@ fun Tasbee7SwipeCard(
 
         val dismissState = rememberSwipeToDismissBoxState(
             confirmValueChange = {
-                if (it == StartToEnd) {
-                    onEdit()
-                    true
-                } else if (it == EndToStart) {
-                    onDelete()
-                    true
-                }
+                if (it == StartToEnd) onEdit()
+                else if (it == EndToStart) onDelete()
                 false
             }
         )
@@ -113,10 +112,20 @@ fun Tasbee7SwipeCard(
                 headlineContent = {
                     Text(
                         text,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp),
+                        style = MaterialTheme.typography.bodyLarge.copy(textDirection = Content),
+                        fontWeight = if (count >= target) FontWeight.Bold else FontWeight.Normal,
                         color = if (count >= target) colorScheme.secondary else colorScheme.onSurface
                     )
                 },
-                supportingContent = { Text("$count ($target)") },
+                leadingContent = {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = "$count")
+                        Text(text = "($target)", color = colorScheme.onSurface.copy(.57f))
+                    }
+                },
                 modifier = Modifier.clip(rocoshape),
             )
         }

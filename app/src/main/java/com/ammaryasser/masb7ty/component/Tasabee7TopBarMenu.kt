@@ -16,13 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ammaryasser.masb7ty.R
-import com.ammaryasser.masb7ty.screen.tasabee7ViewModel
+import com.ammaryasser.masb7ty.viewmodel.Tasabee7ScreenViewModel
 
 
 @Composable
 fun Tasabee7TopBarMenu(
     menuExpansionState: MutableState<Boolean>,
     unifyDialogShowState: MutableState<Boolean>,
+    viewModel: Tasabee7ScreenViewModel,
     onNavToAboutScreen: () -> Unit,
 ) {
     DropdownMenu(
@@ -37,7 +38,7 @@ fun Tasabee7TopBarMenu(
                 Icon(Outlined.Refresh, "")
             },
             onClick = {
-                tasabee7ViewModel.clearAllCounters()
+                viewModel.clearAllCounters()
                 menuExpansionState.value = false
             })
 

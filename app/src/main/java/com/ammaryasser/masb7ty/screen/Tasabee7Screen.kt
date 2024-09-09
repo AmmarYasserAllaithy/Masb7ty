@@ -36,9 +36,6 @@ import com.ammaryasser.masb7ty.data.Tasbee7
 import com.ammaryasser.masb7ty.viewmodel.Tasabee7ScreenViewModel
 
 
-lateinit var tasabee7ViewModel: Tasabee7ScreenViewModel
-
-
 @SuppressLint("UnrememberedMutableState")
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -47,24 +44,25 @@ fun Tasabee7Screen(
     onNavToAboutScreen: () -> Unit,
     onNavBack: () -> Unit,
 ) {
-    tasabee7ViewModel = viewModel(factory = Tasabee7ScreenViewModel.Factory)
+    val viewModel: Tasabee7ScreenViewModel = viewModel(factory = Tasabee7ScreenViewModel.Factory)
 
     Column(
         Modifier
             .fillMaxSize()
             .background(colorScheme.background)
     ) {
-        val tasabee7 = tasabee7ViewModel.tasabee7.collectAsState()
+        val tasabee7 = viewModel.tasabee7.collectAsState()
         val total by derivedStateOf { mutableIntStateOf(tasabee7.value.count()) }
         val totalCount by derivedStateOf { mutableIntStateOf(tasabee7.value.sumOf { it.count }) }
         val totalTarget by derivedStateOf { mutableIntStateOf(tasabee7.value.sumOf { it.target }) }
 
-        Tasabee7ScreenTopBar(total.intValue, onNavToAboutScreen, onNavBack)
+        Tasabee7ScreenTopBar(total.intValue, viewModel, onNavToAboutScreen, onNavBack)
 
         tasabee7.value.takeIf { it.isNotEmpty() }?.run {
             Tasabee7Grid(
                 tasabee7 = this,
                 modifier = Modifier.weight(1f),
+                viewModel = viewModel,
                 onClickTasbee7 = onNavToMasba7tyScreen
             ) {
                 if (totalCount.intValue > 0)
@@ -91,6 +89,7 @@ fun Tasabee7Screen(
 fun Tasabee7Grid(
     tasabee7: List<Tasbee7>,
     modifier: Modifier = Modifier,
+    viewModel: Tasabee7ScreenViewModel,
     onClickTasbee7: (Int) -> Unit,
     stats: @Composable () -> Unit,
 ) {
@@ -135,9 +134,13 @@ fun Tasabee7Grid(
         text = currentTasbee7.value.text,
         target = currentTasbee7.value.target,
     ) { text, target ->
-        tasabee7ViewModel.saveTasbee7(currentTasbee7.value.copy(text = text, target = target))
+        viewModel.saveTasbee7(currentTasbee7.value.copy(text = text, target = target))
     }
 
-    DeleteTasbee7Dialog(showState = deleteDialogShowState, currentTasbee7 = currentTasbee7.value)
+    DeleteTasbee7Dialog(
+        showState = deleteDialogShowState,
+        currentTasbee7 = currentTasbee7.value,
+        viewModel = viewModel
+    )
 
 }

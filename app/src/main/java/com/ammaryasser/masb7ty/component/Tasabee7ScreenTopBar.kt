@@ -14,13 +14,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.ammaryasser.masb7ty.R
 import com.ammaryasser.masb7ty.data.Tasbee7
-import com.ammaryasser.masb7ty.screen.tasabee7ViewModel
+import com.ammaryasser.masb7ty.viewmodel.Tasabee7ScreenViewModel
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun Tasabee7ScreenTopBar(
     total: Int,
+    viewModel: Tasabee7ScreenViewModel,
     onNavToAboutScreen: () -> Unit,
     onNavBack: () -> Unit,
 ) {
@@ -43,7 +44,7 @@ fun Tasabee7ScreenTopBar(
 
         AddOrEditTasbee7Dialog(addDialogShowState) { text, target ->
             val save = { txt: String ->
-                tasabee7ViewModel.saveTasbee7(Tasbee7(text = txt.trim(), target = target))
+                viewModel.saveTasbee7(Tasbee7(text = txt.trim(), target = target))
             }
 
             if (text.contains(Regex("\n+")))
@@ -51,8 +52,8 @@ fun Tasabee7ScreenTopBar(
             else save(text)
         }
 
-        Tasabee7TopBarMenu(menuExpansionState, unifyDialogShowState, onNavToAboutScreen)
+        Tasabee7TopBarMenu(menuExpansionState, unifyDialogShowState, viewModel, onNavToAboutScreen)
 
-        UnifyTargetDialog(unifyDialogShowState)
+        UnifyTargetDialog(unifyDialogShowState, viewModel)
     }
 }

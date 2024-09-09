@@ -14,12 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ammaryasser.masb7ty.R
-import com.ammaryasser.masb7ty.screen.tasabee7ViewModel
+import com.ammaryasser.masb7ty.viewmodel.Tasabee7ScreenViewModel
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun UnifyTargetDialog(showState: MutableState<Boolean>) {
+fun UnifyTargetDialog(showState: MutableState<Boolean>, viewModel: Tasabee7ScreenViewModel) {
 
     val unifiedTargetState = remember { mutableStateOf("") }
 
@@ -27,7 +27,7 @@ fun UnifyTargetDialog(showState: MutableState<Boolean>) {
         title = stringResource(R.string.unify_all_targets),
         showState = showState,
         onConfirm = {
-            tasabee7ViewModel.unifyAllTargets(unifiedTargetState.value.toInt())
+            viewModel.unifyAllTargets(unifiedTargetState.value.toInt())
 
             showState.value = false
             unifiedTargetState.value = ""

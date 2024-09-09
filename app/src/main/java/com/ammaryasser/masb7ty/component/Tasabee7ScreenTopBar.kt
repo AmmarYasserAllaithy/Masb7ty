@@ -43,7 +43,7 @@ fun Tasabee7ScreenTopBar(
 
         AddOrEditTasbee7Dialog(addDialogShowState) { text, target ->
             val save = { txt: String ->
-                tasabee7ViewModel.saveTasbee7(Tasbee7(text = txt, target = target))
+                tasabee7ViewModel.saveTasbee7(Tasbee7(text = txt.trim(), target = target))
             }
 
             if (text.contains(Regex("\n+")))

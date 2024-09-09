@@ -28,9 +28,9 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,21 +45,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ammaryasser.masb7ty.component.TopBar
 import com.ammaryasser.masb7ty.util.LockScreenOrientation
-import com.ammaryasser.masb7ty.util.rocoshape
+import com.ammaryasser.masb7ty.util.roundedShape
 import com.ammaryasser.masb7ty.util.vibrateOneShot
 import com.ammaryasser.masb7ty.viewmodel.Masba7tyScreenViewModel
 
 
-private lateinit var vm: Masba7tyScreenViewModel
-var tasbee7Id: MutableState<Int> = mutableIntStateOf(0)
-
-
 @Composable
 fun Masba7tyScreen(
-    currentId: Int?,
-    onNavToTasabee7Screen: (Boolean) -> Unit
+    zekrId: Int,
+    onNavToTasabee7Screen: (Boolean) -> Unit,
 ) {
-    vm = viewModel(factory = Masba7tyScreenViewModel.Factory)
+    val viewModel: Masba7tyScreenViewModel = viewModel(factory = Masba7tyScreenViewModel.Factory)
 
     LockScreenOrientation(1)
 
@@ -74,45 +70,53 @@ fun Masba7tyScreen(
             }
         }
 
-        //tasbee7Id = remember { mutableStateOf(0) }
-
-        Masba7ah(onNavToTasabee7Screen)
+        Masba7ah(zekrId, viewModel, onNavToTasabee7Screen)
     }
 }
 
 
 @Composable
 fun Masba7ah(
-    onNavToTasabee7Screen: (Boolean) -> Unit
+    zekrId: Int,
+    viewModel: Masba7tyScreenViewModel,
+    onNavToTasabee7Screen: (Boolean) -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
-        val tasabee7 = vm.tasabee7.observeAsState()
 
-        var idx by rememberSaveable { mutableIntStateOf(0) }
+        val tasabee7 = viewModel.tasabee7.collectAsState()
+
+        var idx by rememberSaveable { mutableIntStateOf(-1) }
         var text by remember { mutableStateOf("") }
         var target by remember { mutableIntStateOf(-1) }
         var count by remember { mutableIntStateOf(-1) }
 
-        tasabee7.value?.run {
-            if (isEmpty()) onNavToTasabee7Screen(true)
-            else {
-                tasbee7Id.value.takeIf { it > 0 }?.run {
-                    indexOfFirst { it.id == this }.takeIf { it > -1 }?.run { idx = this }
-                }
+        LaunchedEffect(idx) {
+            tasabee7.value.azkar.takeUnless { it.isEmpty() }?.get(idx)?.let {
+                text = it.text
+                target = it.target
+                count = it.count
+            }
+        }
 
-                this[idx].let {
-                    text = it.text
-                    target = it.target
-                    count = it.count
+        tasabee7.value.run {
+            when {
+                loading -> {}
+                empty -> onNavToTasabee7Screen(true)
+                else -> LaunchedEffect(Unit) {
+                    if (idx == -1) idx = 0
+                    else azkar
+                        .indexOfFirst { it.id == zekrId }
+                        .takeIf { it > -1 }
+                        ?.run { idx = this }
                 }
             }
         }
 
         val saveCount = {
-            tasabee7.value?.run {
-                this[idx].let {
+            tasabee7.value.run {
+                azkar[idx].let {
                     it.count = count
-                    vm.saveTasbee7(it)
+                    viewModel.saveTasbee7(it)
                 }
             }
         }
@@ -128,27 +132,29 @@ fun Masba7ah(
 
         val ctx = LocalContext.current
 
-        val onNext: () -> Unit = {
-            tasabee7.value?.size?.run {
-                if (idx < this - 1) ++idx
-                else {
-                    vibrateOneShot(ctx, 200)
-                    idx = 0
+        val onSlide = { i: Int ->
+            tasabee7.value.azkar.run {
+                when (idx + i) {
+                    size -> {
+                        idx = 0
+                        vibrateOneShot(ctx, 200)
+                    }
 
+                    -1 -> {
+                        idx = size - 1
+                        vibrateOneShot(ctx, 200)
+                    }
+
+                    else -> idx += i
                 }
             }
         }
 
-        val onPrev: () -> Unit = {
-            if (idx > 0) --idx
-            else tasabee7.value?.size?.run {
-                vibrateOneShot(ctx, 200)
-                idx = this - 1
-            }
-        }
 
-
-        NavCtrl(onPrev, onNext)
+        NavCtrl(
+            onPrev = { onSlide(-1) },
+            onNext = { onSlide(1) }
+        )
 
 
         val circleDiameter = 177.dp
@@ -157,14 +163,14 @@ fun Masba7ah(
         Box(
             Modifier
                 .fillMaxSize()
-                .clip(rocoshape)
+                .clip(roundedShape)
                 .clickable {
                     count++
 
                     saveCount()
 
                     if (count % target == 0) {
-                        onNext()
+                        onSlide(1)
                         vibrateOneShot(ctx, 1000)
                     }
                 },
@@ -190,7 +196,7 @@ fun Tasbee7Text(text: String) {
             .fillMaxWidth()
             .heightIn(0.dp, 400.dp)
             .padding(top = 8.dp, bottom = 0.dp, start = 8.dp, end = 8.dp)
-            .clip(rocoshape)
+            .clip(roundedShape)
             .background(colorScheme.surface)
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
@@ -210,13 +216,13 @@ fun Tasbee7Text(text: String) {
 fun CounterBoard(
     count: Int,
     target: Int,
-    onReset: () -> Unit
+    onReset: () -> Unit,
 ) {
     Box(
         Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp, horizontal = 8.dp)
-            .clip(rocoshape)
+            .clip(roundedShape)
             .background(colorScheme.surface)
             .padding(vertical = 5.dp, horizontal = 12.dp)
     ) {
@@ -252,19 +258,19 @@ fun CounterBoard(
 @Composable
 fun NavCtrl(
     onPrev: () -> Unit,
-    onNext: () -> Unit
+    onNext: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
-            .clip(rocoshape),
+            .clip(roundedShape),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
         val modifier = Modifier
-            .clip(rocoshape)
+            .clip(roundedShape)
             .background(colorScheme.surface)
             .padding(horizontal = 8.dp)
         val tint = colorScheme.onSurface.copy(.5f)

@@ -62,7 +62,11 @@ fun Tasabee7Screen(
         Tasabee7ScreenTopBar(total.intValue, onNavToAboutScreen, onNavBack)
 
         tasabee7.value.takeIf { it.isNotEmpty() }?.run {
-            Tasabee7Grid(this, Modifier.weight(1f), onNavBack) {
+            Tasabee7Grid(
+                tasabee7 = this,
+                modifier = Modifier.weight(1f),
+                onClickTasbee7 = onNavToMasba7tyScreen
+            ) {
                 if (totalCount.intValue > 0)
                     Text(
                         text = stringResource(
@@ -87,7 +91,7 @@ fun Tasabee7Screen(
 fun Tasabee7Grid(
     tasabee7: List<Tasbee7>,
     modifier: Modifier = Modifier,
-    onNavBack: () -> Unit,
+    onClickTasbee7: (Int) -> Unit,
     stats: @Composable () -> Unit,
 ) {
     val gap = 12.dp
@@ -119,10 +123,7 @@ fun Tasabee7Grid(
                         currentTasbee7.value = this
                         deleteDialogShowState.value = true
                     },
-                    onClick = {
-                        tasbee7Id.value = id
-                        onNavBack()
-                    }
+                    onClick = { onClickTasbee7(id) }
                 )
             }
         }

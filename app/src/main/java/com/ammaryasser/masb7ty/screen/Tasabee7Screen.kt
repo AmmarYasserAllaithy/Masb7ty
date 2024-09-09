@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -96,7 +97,9 @@ fun Tasabee7Grid(
     val gap = 12.dp
     val editDialogShowState = remember { mutableStateOf(false) }
     val deleteDialogShowState = remember { mutableStateOf(false) }
-    val currentTasbee7 = remember { mutableStateOf(Tasbee7(text = "--", target = 0)) }
+    var currentTasbee7 by remember { mutableStateOf(Tasbee7(text = "", target = 0)) }
+    val textState = remember(key1 = currentTasbee7) { mutableStateOf(currentTasbee7.text) }
+    val targetState = remember(key1 = currentTasbee7) { mutableStateOf("${currentTasbee7.target}") }
 
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Adaptive(minSize = 220.dp),
@@ -114,12 +117,11 @@ fun Tasabee7Grid(
                     count = count,
                     target = target,
                     onEdit = {
-                        currentTasbee7.value = this
-                        println(currentTasbee7.value.text)
+                        currentTasbee7 = this
                         editDialogShowState.value = true
                     },
                     onDelete = {
-                        currentTasbee7.value = this
+                        currentTasbee7 = this
                         deleteDialogShowState.value = true
                     },
                     onClick = { onClickTasbee7(id) }
@@ -128,18 +130,17 @@ fun Tasabee7Grid(
         }
     }
 
-    // fixme: pass text and target
     AddOrEditTasbee7Dialog(
         showState = editDialogShowState,
-        text = currentTasbee7.value.text,
-        target = currentTasbee7.value.target,
-    ) { text, target ->
-        viewModel.saveTasbee7(currentTasbee7.value.copy(text = text, target = target))
+        textState = textState,
+        targetState = targetState,
+    ) { text: String, target: Int ->
+        viewModel.saveTasbee7(currentTasbee7.copy(text = text, target = target))
     }
 
     DeleteTasbee7Dialog(
         showState = deleteDialogShowState,
-        currentTasbee7 = currentTasbee7.value,
+        tasbee7 = currentTasbee7,
         viewModel = viewModel
     )
 

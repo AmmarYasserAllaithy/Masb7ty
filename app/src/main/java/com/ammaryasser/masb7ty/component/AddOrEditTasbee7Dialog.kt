@@ -1,6 +1,5 @@
 package com.ammaryasser.masb7ty.component
 
-import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
@@ -16,22 +15,16 @@ import androidx.compose.ui.unit.dp
 import com.ammaryasser.masb7ty.R
 
 
-@SuppressLint("UnrememberedMutableState")
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun AddOrEditTasbee7Dialog(
     showState: MutableState<Boolean>,
-    text: String? = null, // fixme: try making: MutableState<String> = remember { mutableStateOf("") }
-    target: Int? = null,
+    textState: MutableState<String> = remember { mutableStateOf("") },
+    targetState: MutableState<String> = remember { mutableStateOf("") },
     onConfirm: (String, Int) -> Unit,
 ) {
-    val textState = remember { mutableStateOf(text ?: "") }
-    val targetState = remember { mutableStateOf(target?.toString() ?: "") }
-
-    println(arrayOf(textState, targetState).joinToString(prefix = "-- ") { "'${it.value}'" })
-
     CustomDialog(
-        title = stringResource(if (text == null) R.string.add_tasbee7 else R.string.edit_tasbee7),
+        title = stringResource(if (textState.value.isBlank()) R.string.add_tasbee7 else R.string.edit_tasbee7),
         showState = showState,
         onConfirm = {
             arrayOf(textState, targetState)

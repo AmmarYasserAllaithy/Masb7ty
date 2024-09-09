@@ -14,7 +14,7 @@ import com.ammaryasser.masb7ty.viewmodel.Tasabee7ScreenViewModel
 @Composable
 fun DeleteTasbee7Dialog(
     showState: MutableState<Boolean>,
-    currentTasbee7: Tasbee7,
+    tasbee7: Tasbee7,
     viewModel: Tasabee7ScreenViewModel,
 ) {
     val ctx = LocalContext.current
@@ -26,10 +26,10 @@ fun DeleteTasbee7Dialog(
         dismissText = stringResource(R.string.keep),
         onConfirm = {
             Toast.makeText(ctx, "Deleting..", Toast.LENGTH_SHORT).show()
-            viewModel.deleteTasbee7(currentTasbee7)
+            viewModel.deleteTasbee7(tasbee7)
             showState.value = false
         }
     ) {
-        Text(stringResource(R.string.delete_message, currentTasbee7.text))
+        Text(stringResource(R.string.delete_message, tasbee7.text))
     }
 }

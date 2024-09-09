@@ -1,5 +1,7 @@
 package com.ammaryasser.masb7ty
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -9,57 +11,50 @@ import androidx.navigation.navArgument
 import com.ammaryasser.masb7ty.screen.AboutScreen
 import com.ammaryasser.masb7ty.screen.Masba7tyScreen
 import com.ammaryasser.masb7ty.screen.Tasabee7Screen
-import com.ammaryasser.masb7ty.util.Screen
+import com.ammaryasser.masb7ty.util.Screens
+import com.ammaryasser.masb7ty.util.ScreensNavArgs.ID_KEY
 
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun NavGraph(navController: NavHostController) {
+
     NavHost(
         navController = navController,
-        startDestination = Screen.Masba7ty.routeOfTasbee7Id(0)
+        startDestination = Screens.Masba7ty(0).route
     ) {
         composable(
-            route = Screen.Masba7ty.fullRoute(),
-            arguments = listOf(
-                navArgument(Screen.Masba7ty.ID_KEY) {
-                    type = NavType.IntType
-                    defaultValue = 0
-                },
-            ),
+            route = Screens.Masba7ty().route,
+            arguments = listOf(navArgument(ID_KEY) { type = NavType.IntType }),
         ) {
-            Masba7tyScreen(it.arguments?.getInt(Screen.Masba7ty.ID_KEY)) { isClear ->
-                navController.navigate(Screen.Tasabee7.route) {
-                    if (isClear) popUpTo(Screen.Masba7ty.fullRoute()) {
-                        inclusive = true
-                        saveState = true
-                    }
-                }
+            Masba7tyScreen(zekrId = it.arguments?.getInt(ID_KEY) ?: 0) { isClear ->
+                if (isClear) navController.popBackStack()
+                navController.navigate(Screens.Tasabee7.route)
             }
         }
 
-        composable(route = Screen.Tasabee7.route) {
+        composable(route = Screens.Tasabee7.route) {
             Tasabee7Screen(
-                onNavToMasba7tyScreen = { id ->
-                    navController.navigate(Screen.Masba7ty.routeOfTasbee7Id(id)) {
-                        //launchSingleTop = true
-                        popUpTo(Screen.Tasabee7.route) {
-                            inclusive = true
-                            saveState = true
-                        }
+                onNavToMasba7tyScreen = { zekrId ->
+                    navController.popBackStack()
+                    navController.navigate(Screens.Masba7ty(zekrId).route) {
+                        launchSingleTop = true
                     }
                 },
                 onNavToAboutScreen = {
-                    navController.navigate(Screen.About.route)
+                    navController.navigate(Screens.About.route)
                 },
                 onNavBack = {
                     navController.popBackStack()
-                })
+                }
+            )
         }
 
-        composable(route = Screen.About.route) {
+        composable(route = Screens.About.route) {
             AboutScreen {
                 navController.popBackStack()
             }
         }
     }
+
 }

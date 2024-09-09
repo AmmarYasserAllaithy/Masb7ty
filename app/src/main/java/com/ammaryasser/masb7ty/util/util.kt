@@ -1,42 +1,21 @@
 package com.ammaryasser.masb7ty.util
 
 import android.app.Activity
-
 import android.content.Context
 import android.content.ContextWrapper
-
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-
 import androidx.compose.foundation.shape.RoundedCornerShape
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-
 import java.util.Locale
 
 
-val rocoshape = RoundedCornerShape(16.dp)
-
-
-sealed class Screen(val route: String) {
-
-    object Tasabee7 : Screen("tasabee7_screen")
-
-    object Masba7ty : Screen("masba7ty_screen") {
-        val ID_KEY = "id"
-        fun fullRoute() = "$route?{$ID_KEY}"
-        fun routeOfTasbee7Id(id: Int) = "$route?$id"
-    }
-
-    object About : Screen("about_screen")
-
-}
+val roundedShape = RoundedCornerShape(16.dp)
 
 
 fun vibrateOneShot(ctx: Context, millis: Long) {

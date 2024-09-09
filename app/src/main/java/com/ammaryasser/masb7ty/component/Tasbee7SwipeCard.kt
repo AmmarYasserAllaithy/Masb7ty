@@ -34,7 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection.Companion.Content
 import androidx.compose.ui.unit.dp
-import com.ammaryasser.masb7ty.util.rocoshape
+import com.ammaryasser.masb7ty.util.roundedShape
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +49,7 @@ fun Tasbee7SwipeCard(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = rocoshape,
+        shape = roundedShape,
         elevation = CardDefaults.cardElevation(1.dp),
         onClick = onClick,
     ) {
@@ -64,7 +64,7 @@ fun Tasbee7SwipeCard(
 
         SwipeToDismissBox(
             state = dismissState,
-            modifier = Modifier.clip(rocoshape),
+            modifier = Modifier.clip(roundedShape),
             backgroundContent = {
                 val direction = dismissState.dismissDirection
 
@@ -126,7 +126,7 @@ fun Tasbee7SwipeCard(
                         Text(text = "($target)", color = colorScheme.onSurface.copy(.57f))
                     }
                 },
-                modifier = Modifier.clip(rocoshape),
+                modifier = Modifier.clip(roundedShape),
             )
         }
 

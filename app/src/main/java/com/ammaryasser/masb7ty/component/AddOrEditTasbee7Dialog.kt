@@ -6,9 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -18,33 +19,54 @@ import com.ammaryasser.masb7ty.R
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun AddOrEditTasbee7Dialog(
-    showState: MutableState<Boolean>,
-    textState: MutableState<String> = remember { mutableStateOf("") },
-    targetState: MutableState<String> = remember { mutableStateOf("") },
+    isAppeared: Boolean,
+    initialText: String,
+    initialTarget: String,
+    onDismiss: () -> Unit,
     onConfirm: (String, Int) -> Unit,
 ) {
+
+    var text by remember { mutableStateOf(initialText) }
+    var target by remember { mutableStateOf(initialTarget) }
+
     CustomDialog(
-        title = stringResource(if (textState.value.isBlank()) R.string.add_tasbee7 else R.string.edit_tasbee7),
-        showState = showState,
+        title = stringResource(if (initialText.isBlank()) R.string.add_tasbee7 else R.string.edit_tasbee7),
+        isAppeared = isAppeared,
+        onDismiss = onDismiss,
         onConfirm = {
-            arrayOf(textState, targetState)
-                .map { it.value.trim() }
-                .run {
-                    if (all { it.isNotBlank() }) {
-                        onConfirm(this[0], this[1].toInt())
-                        showState.value = false
-                        textState.value = ""
-                        targetState.value = ""
-                    }
+            arrayOf(text, target)
+                .map { it.trim() }
+                .takeIf { it.all { it.isNotBlank() } }
+                ?.run {
+                    onConfirm(this[0], this[1].toInt())
                 }
-        }
+        },
     ) {
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            RoundedTextField(stringResource(R.string.tasbee7_text), textState)
-            RoundedTextField(stringResource(R.string.target), targetState, true)
+
+            RoundedTextField(
+                placeholder = stringResource(R.string.tasbee7_text),
+                value = text,
+                onValueChange = {
+                    text = it
+                },
+            )
+
+            RoundedTextField(
+                placeholder = stringResource(R.string.target),
+                value = target,
+                onValueChange = {
+                    target = it
+                },
+                isNumberType = true,
+            )
+
         }
+
     }
+
 }

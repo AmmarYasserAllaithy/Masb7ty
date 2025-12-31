@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.ammaryasser.masb7ty"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.ammaryasser.masb7ty"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

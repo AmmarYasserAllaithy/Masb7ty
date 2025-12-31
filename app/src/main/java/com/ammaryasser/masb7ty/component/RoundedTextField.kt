@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -23,16 +22,18 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun RoundedTextField(
     placeholder: String,
-    valueState: MutableState<String>,
+    value: String,
+    onValueChange: (String) -> Unit,
     isNumberType: Boolean = false,
     radius: Dp = 12.dp,
     supportingText: @Composable (() -> Unit)? = null,
 ) {
+
     TextField(
         modifier = Modifier.fillMaxWidth(),
-        value = valueState.value,
+        value = value,
         onValueChange = {
-            valueState.value = it
+            onValueChange(it)
         },
         placeholder = {
             Text(placeholder)
@@ -48,6 +49,7 @@ fun RoundedTextField(
         supportingText = supportingText,
         textStyle = TextStyle(textDirection = TextDirection.Content),
         shape = RoundedCornerShape(radius),
-        singleLine = isNumberType
+        singleLine = isNumberType,
     )
+
 }

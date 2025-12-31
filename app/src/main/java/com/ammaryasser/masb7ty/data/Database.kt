@@ -26,7 +26,7 @@ abstract class Tasabee7DB : RoomDatabase() {
                     Tasabee7DB::class.java,
                     "masb7ty_app_db"
                 )
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(false)
                     .build()
                     .also { Instance = it }
             }

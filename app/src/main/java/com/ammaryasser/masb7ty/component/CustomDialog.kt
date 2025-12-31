@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ammaryasser.masb7ty.R
@@ -17,17 +16,19 @@ import com.ammaryasser.masb7ty.R
 @Composable
 fun CustomDialog(
     title: String,
-    showState: MutableState<Boolean>,
-    dismissible: Boolean = false,
+    isAppeared: Boolean,
+    isDismissible: Boolean = false,
     dismissText: String = stringResource(R.string.cancel),
+    onDismiss: () -> Unit,
     confirmText: String = stringResource(R.string.save),
     onConfirm: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    if (showState.value)
+
+    if (isAppeared)
         AlertDialog(
             onDismissRequest = {
-                if (dismissible) showState.value = false
+                if (isDismissible) onDismiss()
             },
             title = {
                 Text(
@@ -40,7 +41,7 @@ fun CustomDialog(
                 Button(
                     onClick = {
                         onConfirm()
-                        showState.value = false
+                        onDismiss()
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
@@ -52,9 +53,7 @@ fun CustomDialog(
             },
             dismissButton = {
                 TextButton(
-                    onClick = {
-                        showState.value = false
-                    }
+                    onClick = onDismiss
                 ) {
                     Text(dismissText)
                 }

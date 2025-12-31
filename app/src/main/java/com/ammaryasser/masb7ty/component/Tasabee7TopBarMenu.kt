@@ -11,25 +11,25 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ammaryasser.masb7ty.R
-import com.ammaryasser.masb7ty.viewmodel.Tasabee7ScreenViewModel
 
 
 @Composable
 fun Tasabee7TopBarMenu(
-    menuExpansionState: MutableState<Boolean>,
-    unifyDialogShowState: MutableState<Boolean>,
-    viewModel: Tasabee7ScreenViewModel,
-    onNavToAboutScreen: () -> Unit,
+    isMenuExpanded: Boolean,
+    onMenuDismiss: () -> Unit,
+    onItemClearAllCounters: () -> Unit,
+    onItemUnifyAllTargets: () -> Unit,
+    onItemAbout: () -> Unit,
 ) {
     DropdownMenu(
-        expanded = menuExpansionState.value,
-        onDismissRequest = { menuExpansionState.value = false }
+        expanded = isMenuExpanded,
+        onDismissRequest = onMenuDismiss
     ) {
+
         DropdownMenuItem(
             text = {
                 Text(stringResource(R.string.clear_all_counters))
@@ -38,9 +38,10 @@ fun Tasabee7TopBarMenu(
                 Icon(Outlined.Refresh, "")
             },
             onClick = {
-                viewModel.clearAllCounters()
-                menuExpansionState.value = false
-            })
+                onMenuDismiss()
+                onItemClearAllCounters()
+            }
+        )
 
         DropdownMenuItem(
             text = {
@@ -50,8 +51,8 @@ fun Tasabee7TopBarMenu(
                 Icon(Outlined.Create, contentDescription = "")
             },
             onClick = {
-                menuExpansionState.value = false
-                unifyDialogShowState.value = true
+                onMenuDismiss()
+                onItemUnifyAllTargets()
             }
         )
 
@@ -65,9 +66,10 @@ fun Tasabee7TopBarMenu(
                 Icon(Outlined.Info, "")
             },
             onClick = {
-                menuExpansionState.value = false
-                onNavToAboutScreen()
+                onMenuDismiss()
+                onItemAbout()
             }
         )
+
     }
 }

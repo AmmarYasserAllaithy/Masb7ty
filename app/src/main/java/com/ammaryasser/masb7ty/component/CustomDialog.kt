@@ -16,7 +16,6 @@ import com.ammaryasser.masb7ty.R
 @Composable
 fun CustomDialog(
     title: String,
-    isAppeared: Boolean,
     isDismissible: Boolean = false,
     dismissText: String = stringResource(R.string.cancel),
     onDismiss: () -> Unit,
@@ -25,44 +24,43 @@ fun CustomDialog(
     content: @Composable () -> Unit,
 ) {
 
-    if (isAppeared)
-        AlertDialog(
-            onDismissRequest = {
-                if (isDismissible) onDismiss()
-            },
-            title = {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleLarge
+    AlertDialog(
+        onDismissRequest = {
+            if (isDismissible) onDismiss()
+        },
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge
+            )
+        },
+        text = content,
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm()
+                    onDismiss()
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
                 )
-            },
-            text = content,
-            confirmButton = {
-                Button(
-                    onClick = {
-                        onConfirm()
-                        onDismiss()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                ) {
-                    Text(confirmText)
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = onDismiss
-                ) {
-                    Text(dismissText)
-                }
-            },
-            containerColor = MaterialTheme.colorScheme.background,
-            titleContentColor = MaterialTheme.colorScheme.primary,
-            tonalElevation = 16.dp,
-            shape = RoundedCornerShape(16.dp),
-        )
+            ) {
+                Text(confirmText)
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss
+            ) {
+                Text(dismissText)
+            }
+        },
+        containerColor = MaterialTheme.colorScheme.background,
+        titleContentColor = MaterialTheme.colorScheme.primary,
+        tonalElevation = 16.dp,
+        shape = RoundedCornerShape(16.dp),
+    )
 }
 
 

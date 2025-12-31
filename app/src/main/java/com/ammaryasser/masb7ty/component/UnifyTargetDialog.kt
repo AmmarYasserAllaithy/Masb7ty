@@ -20,7 +20,6 @@ import com.ammaryasser.masb7ty.R
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun UnifyTargetDialog(
-    isAppeared: Boolean,
     onDismiss: () -> Unit,
     onUnify: (Int) -> Unit,
 ) {
@@ -29,7 +28,6 @@ fun UnifyTargetDialog(
 
     CustomDialog(
         title = stringResource(R.string.unify_all_targets),
-        isAppeared = isAppeared,
         onDismiss = onDismiss,
         onConfirm = {
             onUnify(unifiedTarget.toInt())

@@ -118,7 +118,6 @@ fun Tasabee7Screen(
 
         if (isAddEditDialogAppeared)
             AddOrEditTasbee7Dialog(
-                isAppeared = isAddEditDialogAppeared, // TODO: hoist
                 initialText = currentTasbee7?.text.orEmpty(),
                 initialTarget = currentTasbee7?.target?.toString() ?: "",
                 onDismiss = {
@@ -146,7 +145,6 @@ fun Tasabee7Screen(
 
         if (isDeleteDialogAppeared)
             DeleteTasbee7Dialog(
-                isAppeared = isDeleteDialogAppeared,
                 tasbee7 = currentTasbee7!!,
                 onDismiss = {
                     isDeleteDialogAppeared = false
@@ -158,7 +156,6 @@ fun Tasabee7Screen(
 
         if (isUnifyDialogAppeared)
             UnifyTargetDialog(
-                isAppeared = isUnifyDialogAppeared,
                 onDismiss = {
                     isUnifyDialogAppeared = false
                 },

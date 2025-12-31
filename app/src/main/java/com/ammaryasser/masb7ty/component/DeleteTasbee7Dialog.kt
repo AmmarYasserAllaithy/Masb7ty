@@ -11,7 +11,6 @@ import com.ammaryasser.masb7ty.data.Tasbee7
 
 @Composable
 fun DeleteTasbee7Dialog(
-    isAppeared: Boolean,
     tasbee7: Tasbee7,
     onDismiss: () -> Unit,
     onDeleteItem: () -> Unit,
@@ -20,7 +19,6 @@ fun DeleteTasbee7Dialog(
 
     CustomDialog(
         title = stringResource(R.string.delete_title),
-        isAppeared = isAppeared,
         confirmText = stringResource(R.string.delete),
         dismissText = stringResource(R.string.keep),
         onDismiss = onDismiss,

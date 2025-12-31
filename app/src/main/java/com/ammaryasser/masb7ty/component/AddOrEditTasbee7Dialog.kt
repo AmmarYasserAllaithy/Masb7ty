@@ -19,7 +19,6 @@ import com.ammaryasser.masb7ty.R
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun AddOrEditTasbee7Dialog(
-    isAppeared: Boolean,
     initialText: String,
     initialTarget: String,
     onDismiss: () -> Unit,
@@ -31,7 +30,6 @@ fun AddOrEditTasbee7Dialog(
 
     CustomDialog(
         title = stringResource(if (initialText.isBlank()) R.string.add_tasbee7 else R.string.edit_tasbee7),
-        isAppeared = isAppeared,
         onDismiss = onDismiss,
         onConfirm = {
             arrayOf(text, target)
